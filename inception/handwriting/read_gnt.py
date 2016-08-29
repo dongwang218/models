@@ -9,12 +9,14 @@ import threading
 text2label = {}
 text2label_lock = threading.Lock()
 def get_label(text):
+  """This rely on lock, not a good idea, should build this first"""
   with text2label_lock:
     label = text2label.get(text, None)
-    found = not label
+    found = True
     if not label:
       label = len(text2label)
       text2label[text] = label
+      found = False
   return(found, label, text)
 
 def get_num_labels():

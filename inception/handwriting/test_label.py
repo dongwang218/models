@@ -28,9 +28,9 @@ import pickle
 
 num_labels = 3755
 
-labels = {}
 count = 0
-for file in sys.argv[2:]:
+for file in sys.argv[1:]:
+  print(file)
   for serialized_example in tf.python_io.tf_record_iterator(file):
     count += 1
     example = tf.train.Example()
@@ -41,33 +41,7 @@ for file in sys.argv[2:]:
 
     text_bytes = example.features.feature['text'].bytes_list.value[0].decode('utf-8')
     #print(text_bytes)
-    labels[text_bytes] = label
-    if count == 1:
-      buffer = example.features.feature['encoded'].bytes_list.value[0] #jpeg
-
-      file_jpgdata = StringIO(buffer)
-      dt = Image.open(file_jpgdata)
-      binary = np.array(dt) < 200
-      for h in range(74):
-        for w in range(74):
-          if binary[h, w]:
-            sys.stdout.write('.')
-          else:
-            sys.stdout.write(' ')
-        sys.stdout.write('\n')
-    if len(labels) == num_labels:
-      print('total %s' % count)
-      print('num labels found %d' % len(labels))
-      sorted1 = sorted(labels.items(), key = lambda _x: _x[1])
-      for i in range(len(sorted1)-1):
-        if sorted1[i][1] == sorted1[i+1][1]:
-          print('bad')
-          print('%s %s same' % (sorted1[i], sorted1[i+1]))
-
-      with open(sys.argv[1], 'wb') as output:
-        pickle.dump(labels, output)
-
-      sys.exit(0)
+    if text_bytes == u'\u554a': #u'\u65e5':
+      print(label)
 
 print('total %s' % count)
-print('num labels found %d' % len(labels))

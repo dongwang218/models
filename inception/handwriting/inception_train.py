@@ -348,6 +348,7 @@ def train(dataset):
                       'sec/batch)')
         print(format_str % (datetime.now(), step, loss_value,
                             examples_per_sec, duration))
+        sys.stdout.flush()
 
       if step % 100 == 0:
         summary_str = sess.run(summary_op)

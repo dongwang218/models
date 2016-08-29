@@ -119,6 +119,7 @@ def _process_image_files_batch(thread_index, ranges, name, filenames,
     print('%s [thread %d]: Processed %d images in file %s.' %
           (datetime.now(), thread_index, shard_counter, filename))
     sys.stdout.flush()
+    writer.close()
 
   print('%s [thread %d]: Wrote %d images to %d shards.' %
         (datetime.now(), thread_index, counter, num_shards_per_thread))

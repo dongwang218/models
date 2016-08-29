@@ -49,10 +49,11 @@ def export():
         inception_model.MOVING_AVERAGE_DECAY)
     variables_to_restore = variable_averages.variables_to_restore()
     saver = tf.train.Saver(variables_to_restore)
-    with tf.Session() as sess:
+    with tf.Session(config = tf.ConfigProto(device_count = {'GPU': 0})) as sess:
       # Restore variables from training checkpoints.
       ckpt = tf.train.get_checkpoint_state(FLAGS.checkpoint_dir)
       if ckpt and ckpt.model_checkpoint_path:
+        print('restoring from %s' % ckpt.model_checkpoint_path)
         saver.restore(sess, ckpt.model_checkpoint_path)
         # Assuming model_checkpoint_path looks something like:
         #   /my-favorite-path/imagenet_train/model.ckpt-0,
