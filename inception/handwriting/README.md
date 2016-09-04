@@ -53,7 +53,9 @@ It took more than a day
 ```
 
 ### spot check and output the labels
+```
 python handwriting/test_read_proto.py /home/ubuntu/workspace/data/records/label_output.pkl `ls ~/workspace/data/records/validation*`
+```
 
 ## Training a model
 should use training data instead
